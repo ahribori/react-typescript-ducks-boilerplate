@@ -1,7 +1,15 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import SampleComponent from '../components/SampleComponent';
+import { RootState } from '../store';
+import { fetchSample } from '../store/Sample';
+import { Dispatch } from 'redux';
 
-class Home extends React.Component {
+interface HomeProps {
+    dispatch: Dispatch<any>
+}
+
+class Home extends React.Component<HomeProps> {
     public render() {
         return (
             <div>
@@ -9,6 +17,12 @@ class Home extends React.Component {
             </div>
         );
     }
+
+    public async componentDidMount() {
+        await this.props.dispatch(fetchSample());
+    }
 }
 
-export default Home;
+const mapStateToProps = (state: RootState) => state;
+
+export default connect(mapStateToProps)(Home);

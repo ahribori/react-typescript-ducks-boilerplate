@@ -6,22 +6,25 @@ import {
     createPendingState,
     createSuccessState,
     createFailureState,
+    ThunkState,
 } from '../helpers/requestThunkHelpers';
+import { Post } from '../models/post';
+
 
 export interface SampleState {
-    data: any;
-    fetch: any;
+    data: Post[] | null;
+    fetch: ThunkState | null;
 }
 
 // ACTION TYPES
-const FETCH = createRequestThunkTypes('user/FETCH');
+const FETCH = createRequestThunkTypes('sample/FETCH');
 
 // ACTIONS
 
 /* 예약 생성 */
-export const fetchUserProfile = () => {
+export const fetchSample = () => {
     return createRequestThunk(FETCH.DEFAULT, {
-        url: '/v4/user/profile',
+        url: 'https://jsonplaceholder.typicode.com/posts',
         method: 'GET',
     });
 };
