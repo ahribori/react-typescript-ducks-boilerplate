@@ -4,10 +4,11 @@ import SampleComponent from '../components/SampleComponent';
 import { RootState } from '../store';
 import { fetchSample, SampleState } from '../store/Sample';
 import { AnyFunction } from '../models/common';
+import { ThunkPromise } from '../helpers/requestThunkHelpers';
 
 interface HomeProps {
     sample: SampleState;
-    fetchSample: () => void;
+    fetchSample: () => ThunkPromise;
 }
 
 class Home extends React.Component<HomeProps> {
@@ -21,6 +22,8 @@ class Home extends React.Component<HomeProps> {
 
     public async componentDidMount() {
         await this.props.fetchSample();
+        const { data } = this.props.sample.fetchSample;
+        console.log(data);
     }
 }
 

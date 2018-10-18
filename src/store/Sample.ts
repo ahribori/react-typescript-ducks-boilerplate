@@ -3,17 +3,15 @@ import { handleActions } from 'redux-actions';
 import {
     createRequestThunk,
     createRequestThunkTypes,
+    createInitialState,
     createPendingState,
     createSuccessState,
     createFailureState,
     ThunkState,
 } from '../helpers/requestThunkHelpers';
-import { Post } from '../models/post';
-
 
 export interface SampleState {
-    data: Post[] | null;
-    fetch: ThunkState | null;
+    fetchSample: ThunkState;
 }
 
 // ACTION TYPES
@@ -31,8 +29,7 @@ export const fetchSample = () => {
 
 // INITIAL STATE
 const initialState: SampleState = {
-    data: null,
-    fetch: null,
+    fetchSample: createInitialState(),
 };
 
 // REDUCERS
@@ -40,14 +37,13 @@ export default handleActions<SampleState, any>(
     {
 
         [FETCH.PENDING]: (state) => update(state, {
-            fetch: { $set: createPendingState() },
+            fetchSample: { $set: createPendingState() },
         }),
         [FETCH.SUCCESS]: (state, action) => update(state, {
-            createResponse: { $set: action.payload.data },
-            create: { $set: createSuccessState() },
+            fetchSample: { $set: createSuccessState(action.payload.data) },
         }),
         [FETCH.FAILURE]: (state, action) => update(state, {
-            create: { $set: createFailureState(action.payload) },
+            fetchSample: { $set: createFailureState(action.payload) },
         }),
 
     },

@@ -25,7 +25,10 @@ export interface ThunkState {
     pending: boolean;
     success: boolean;
     error: any;
+    data?: any;
 }
+
+export type ThunkPromise = Promise<SuccessPayload | FailurePayload>
 
 export const createRequestThunk = (actionType: string, axiosOptions: AxiosRequestConfig = {}) => (dispatch: Dispatch) => {
     if (process.env.NODE_ENV === 'development') {
@@ -69,18 +72,29 @@ export const createRequestThunkTypes = (actionType: string): ThunkTypes => {
     };
 };
 
-export const createPendingState = (): ThunkState => {
+export const createInitialState = (): ThunkState => {
     return {
-        pending: true,
+        pending: false,
         success: false,
+        data: null,
         error: null,
     };
 };
 
-export const createSuccessState = (): ThunkState => {
+export const createPendingState = (): ThunkState => {
+    return {
+        pending: true,
+        success: false,
+        data: null,
+        error: null,
+    };
+};
+
+export const createSuccessState = (data: any): ThunkState => {
     return {
         pending: false,
         success: true,
+        data,
         error: null,
     };
 };
@@ -89,6 +103,7 @@ export const createFailureState = (error: any): ThunkState => {
     return {
         pending: false,
         success: false,
+        data: null,
         error,
     };
 };
