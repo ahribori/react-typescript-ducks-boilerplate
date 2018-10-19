@@ -18,7 +18,7 @@ const rootReducer = (state: RootState, action: Action) => {
     return appReducer(state, action);
 };
 
-export function initializeStore(initialState: object) {
+export function initializeStore(initialState: RootState) {
     return createStore(
         rootReducer,
         initialState,

@@ -4,12 +4,12 @@ import App from './App';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
-import { initializeStore } from './store';
+import { initializeStore, RootState } from './store';
 import {
     BrowserRouter as Router,
 } from 'react-router-dom';
 
-const store = initializeStore({});
+const store = initializeStore({} as RootState);
 
 ReactDOM.render(
     <Router>
